@@ -50,7 +50,6 @@ modules:
     user: {} # Also add Flathub user repo, but no user packages
   
   - type: brew
-    nofile-limits: true # increase nofile limits
     brew-analytics: false # disable telemetry
 
   - type: script
