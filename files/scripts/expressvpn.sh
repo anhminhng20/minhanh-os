@@ -18,3 +18,10 @@ rpm --import https://www.expressvpn.com/expressvpn_release_public_key_0xAFF2A141
 rpm-ostree install expressvpn
 
 rm -f /etc/yum.repos.d/expressvpn.repo
+
+mkdir -p /usr/lib/systemd/system/expressvpn.service.d
+
+cat <<EOF > /usr/lib/systemd/system/expressvpn.service.d/override.conf
+[Service]
+ExecStop=/usr/bin/expressvpn disconnect
+EOF
