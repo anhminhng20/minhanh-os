@@ -1,4 +1,4 @@
-[Unit]Add commentMore actions
+[Unit]
 Description=Set up swap on first boot
 ConditionVirtualization=no
 ConditionPathExists=!/var/swap/swapfile
