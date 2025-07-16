@@ -1,4 +1,4 @@
-#!/usr/bin/shAdd commentMore actions
+#!/usr/bin/sh
 set -e
 
 cd "$(dirname "$0")"
