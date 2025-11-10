@@ -6,17 +6,17 @@ set -oue pipefail
 # a separate mutable, stateful FS that's overlaid onto
 # the ostree rootfs. Therefore we need to install it into
 # /usr/lib/opt/microsoft to maintain the expected path structure.
-mkdir -p /var/opt
+# mkdir -p /var/opt
 
 # Setup repo
-curl -sSLf "https://packages.microsoft.com/config/fedora/42/prod.repo" -o /etc/yum.repos.d/microsoft.repo
+# curl -sSLf "https://packages.microsoft.com/config/fedora/42/prod.repo" -o /etc/yum.repos.d/microsoft.repo
 
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
+# rpm --import https://packages.microsoft.com/keys/microsoft.asc
 
-rpm-ostree install mdatp
+# rpm-ostree install mdatp
 
 # Move the initial installation to the correct base directory
-mv /var/opt/microsoft /usr/lib/opt/microsoft
+# mv /var/opt/microsoft /usr/lib/opt/microsoft
 
 # Create necessary directories and tmpfiles configuration
 cat <<EOF >/usr/lib/tmpfiles.d/microsoft.conf
@@ -42,4 +42,4 @@ ExecStartPre=/usr/bin/bash -c "env LD_LIBRARY_PATH='' /usr/sbin/restorecon -vR /
 ExecStop=/usr/bin/umount /var/opt/microsoft
 EOF
 
-systemctl enable mdatp
+# systemctl enable mdatp

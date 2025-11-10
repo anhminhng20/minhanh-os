@@ -22,11 +22,15 @@ modules:
       - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%OS_VERSION%/atim-starship-fedora-%OS_VERSION%.repo
       - https://download.opensuse.org/repositories/home:/lamlng/Fedora_Rawhide/home:lamlng.repo
       - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+      - https://packages.microsoft.com/config/rhel/10/prod.repo
     install:
       - micro
       - starship
       - ibus-bamboo
       - tailscale
+      - mdatp
+    optfix:
+      - microsoft
     remove:
       # example: removing firefox (in favor of the flatpak)
       # "firefox" is the main package, "firefox-langpacks" is a dependency
@@ -58,7 +62,7 @@ modules:
 
   - type: script
     scripts:
-      - mdatp.sh
+      # - mdatp.sh
       - expressvpn.sh
 
   - type: systemd
@@ -67,6 +71,15 @@ modules:
         - tailscaled.service
         - fstrim.timer
         - setup-swap.service
+        - mdatp.service
+  
+  - type: containerfile
+    snippets:
+      - RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
+      - RUN find /tmp/rpms
+      # - RUN dnf5 -y install /tmp/rpms/kmod-xone-*.rpm /tmp/rpms/kmod-openrazer-*.rpm
+      - RUN dnf5 -y install /tmp/rpms/kmod-v4l2loopback-*.rpm /tmp/rpms/kmod-xone-*.rpm /tmp/rpms/kmod-openrazer-*.rpm
+      - RUN sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
 
   - type: kargs
     arch: x86_64
