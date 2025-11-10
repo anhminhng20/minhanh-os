@@ -72,7 +72,12 @@ modules:
         - fstrim.timer
         - setup-swap.service
         - mdatp.service
-  
+
+  - type: copy
+    from: ghcr.io/ublue-os/akmods:bazzite-43
+    src: /rpms/kmods
+    dest: /tmp/rpms
+
   - type: containerfile
     snippets:
       - RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
